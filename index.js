@@ -38,6 +38,12 @@ async function run() {
         res.send(result)
        
        })
+       app.get('/Addproduct',async(req,res)=>{
+        const getingData = databaseCollection.find()
+        const result = await getingData.toArray()
+        res.send(result)
+       
+       })
        
 
 
