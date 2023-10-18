@@ -1,5 +1,5 @@
 const express = require('express');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const cors = require('cors');
 require('dotenv').config()
 const app = express()
@@ -44,6 +44,34 @@ async function run() {
         res.send(result)
        
        })
+       app.get('/Addproduct/:id',async(req,res)=>{
+        const id = req.params.id
+        const qure = {_id:new ObjectId(id)}
+        const getingData = await databaseCollection.findOne(qure)
+        
+        res.send(getingData)
+       
+       })
+       app.put('/Addproduct/:id',async(req,res)=>{
+        const id = req.params.id
+        const user = req.body
+       const qure = {_id:new ObjectId(id)}
+       const option = {upsert:true}
+       const fieldData = {
+        $set:{
+          productsName:user.productsName,
+          BrandName:user.BrandName,
+          productPrice:user.productPrice,
+          productDetais:user.productDetais,
+          typesofproducts:user.typesofproducts,
+          Rating:user.Rating,
+          productImg:user.productImg
+        
+        }
+       }
+       const result = await databaseCollection.updateOne(qure,fieldData,option)
+       res.send(result)
+     })
        
 
 
