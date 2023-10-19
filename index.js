@@ -30,8 +30,41 @@ async function run() {
 
     await client.connect();
     const databaseCollection = client.db("TechElectroHubDB").collection("TechElectroHubUser")
+    const myCartcollection = client.db("TechElectroHubDB").collection("MyCart")
+    const myTopSalarcollection = client.db("TechElectroHubDB").collection("TopSalar")
+    const myBrandscollection = client.db("TechElectroHubDB").collection("brands")
 
-
+    app.post('/mycart',async(req,res)=>{
+      const myCartData = req.body
+      const result = await myCartcollection.insertOne(myCartData)
+      res.send(result)
+     
+     })
+    app.delete('/mycart/:id',async(req,res)=>{
+      const id = req.params.id
+      const qure = {_id:new ObjectId(id)}
+      const result = await myCartcollection.deleteOne(qure)
+      res.send(result)
+     
+     })
+     app.get('/mycart',async(req,res)=>{
+      const myCartData = myCartcollection.find()
+      const result = await myCartData.toArray()
+      res.send(result)
+     
+     })
+     app.get('/TopSalar',async(req,res)=>{
+      const myCartData = myTopSalarcollection.find()
+      const result = await myCartData.toArray()
+      res.send(result)
+     
+     })
+     app.get('/brands',async(req,res)=>{
+      const myCartData = myBrandscollection.find()
+      const result = await myCartData.toArray()
+      res.send(result)
+     
+     })
     app.post('/Addproduct',async(req,res)=>{
         const getData = req.body
         const result = await databaseCollection.insertOne(getData)
@@ -44,6 +77,7 @@ async function run() {
         res.send(result)
        
        })
+   
        app.get('/Addproduct/:id',async(req,res)=>{
         const id = req.params.id
         const qure = {_id:new ObjectId(id)}
