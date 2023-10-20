@@ -8,13 +8,9 @@ const port = process.env.PORT || 3000;
 // middleWare
 app.use(cors())
 app.use(express.json())
-//TechElectroHub
-//kHxRn58mp4xTcEhQ
-const userName = process.env.DB_USER
-const userPass = process.env.DB_PASS
 
 // <===============Database connetion start============>
-const uri = `mongodb+srv://${userName}:${userPass}@cluster0.wgy9amh.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.wgy9amh.mongodb.net/?retryWrites=true&w=majority`;
 
 
 const client = new MongoClient(uri, {
